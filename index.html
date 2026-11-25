@@ -1,0 +1,1365 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nguyễn Văn Thành Ngọc | CNTT 4.0 - FPT Polytechnic</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter & Noto Serif JP -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Serif+JP:wght@500;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Noto Serif JP', 'serif'],
+                    },
+                    colors: {
+                        sakura: {
+                            50: '#fff5f7',
+                            100: '#ffe4ea',
+                            200: '#ffcdd9',
+                            300: '#ffb7c5',
+                            400: '#ff8da3',
+                            500: '#f45d7e',
+                            600: '#d84367',
+                            700: '#b52b4d',
+                            800: '#972643',
+                            900: '#80233d',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Nền kem trắng & hồng phấn dịu mắt */
+        body {
+            background: linear-gradient(135deg, #fffaf9 0%, #fff0f4 45%, #ffe6ed 100%);
+            color: #2d1e24;
+            overflow-x: hidden;
+        }
+
+        /* Hiệu ứng Glassmorphism hiện đại */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.72);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 183, 197, 0.45);
+            box-shadow: 0 10px 30px -5px rgba(216, 67, 103, 0.08);
+        }
+
+        .glass-card-hover {
+            transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .glass-card-hover:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.9);
+            border-color: rgba(216, 67, 103, 0.6);
+            box-shadow: 0 18px 36px -8px rgba(216, 67, 103, 0.16);
+        }
+
+        /* Canvas hoa anh đào cố định toàn màn hình */
+        #sakura-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 40;
+        }
+
+        /* Thanh cuộn tinh tế */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #fff5f7;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #ffb7c5;
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #d84367;
+        }
+
+        /* Hiệu ứng nhấp nhô nhẹ cho cành đào */
+        @keyframes sway {
+            0%, 100% { transform: rotate(0deg) translateY(0px); }
+            50% { transform: rotate(1.5deg) translateY(3px); }
+        }
+        .animate-sway {
+            animation: sway 6s ease-in-out infinite;
+            transform-origin: top left;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-sakura-200 selection:text-sakura-900">
+
+    <!-- Canvas Hiệu ứng Hoa Anh Đào Rơi -->
+    <canvas id="sakura-canvas"></canvas>
+
+    <!-- Họa tiết cành hoa anh đào trang trí góc trên bên trái -->
+    <div class="fixed top-0 left-0 pointer-events-none z-10 opacity-75 w-48 sm:w-72 animate-sway">
+        <svg viewBox="0 0 300 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M-10 15 C 60 30, 120 75, 195 140 M 85 52 C 125 40, 165 45, 210 65 M 130 92 C 145 125, 150 155, 140 190" stroke="#7c4a53" stroke-width="4.5" stroke-linecap="round"/>
+            <!-- Bông hoa 1 -->
+            <g transform="translate(195, 140) scale(0.85)">
+                <circle cx="0" cy="-14" r="10" fill="#ffb7c5"/>
+                <circle cx="13" cy="-4" r="10" fill="#ffcdd9"/>
+                <circle cx="8" cy="11" r="10" fill="#ffb7c5"/>
+                <circle cx="-8" cy="11" r="10" fill="#ffcdd9"/>
+                <circle cx="-13" cy="-4" r="10" fill="#ffb7c5"/>
+                <circle cx="0" cy="0" r="5" fill="#d84367"/>
+            </g>
+            <!-- Bông hoa 2 -->
+            <g transform="translate(210, 65) scale(0.75)">
+                <circle cx="0" cy="-14" r="10" fill="#ffcdd9"/>
+                <circle cx="13" cy="-4" r="10" fill="#ffb7c5"/>
+                <circle cx="8" cy="11" r="10" fill="#ffcdd9"/>
+                <circle cx="-8" cy="11" r="10" fill="#ffb7c5"/>
+                <circle cx="-13" cy="-4" r="10" fill="#ffcdd9"/>
+                <circle cx="0" cy="0" r="5" fill="#d84367"/>
+            </g>
+            <!-- Bông hoa 3 -->
+            <g transform="translate(140, 190) scale(0.65)">
+                <circle cx="0" cy="-14" r="10" fill="#ffb7c5"/>
+                <circle cx="13" cy="-4" r="10" fill="#ffe4ea"/>
+                <circle cx="8" cy="11" r="10" fill="#ffb7c5"/>
+                <circle cx="-8" cy="11" r="10" fill="#ffe4ea"/>
+                <circle cx="-13" cy="-4" r="10" fill="#ffb7c5"/>
+                <circle cx="0" cy="0" r="4.5" fill="#d84367"/>
+            </g>
+            <!-- Bông hoa 4 -->
+            <g transform="translate(95, 50) scale(0.8)">
+                <circle cx="0" cy="-14" r="10" fill="#ffe4ea"/>
+                <circle cx="13" cy="-4" r="10" fill="#ffb7c5"/>
+                <circle cx="8" cy="11" r="10" fill="#ffe4ea"/>
+                <circle cx="-8" cy="11" r="10" fill="#ffb7c5"/>
+                <circle cx="-13" cy="-4" r="10" fill="#ffe4ea"/>
+                <circle cx="0" cy="0" r="5" fill="#d84367"/>
+            </g>
+        </svg>
+    </div>
+
+    <!-- Hộp thông báo (Toast) thay thế cho alert() -->
+    <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+    <!-- Thanh điều hướng (Navbar) -->
+    <header class="sticky top-0 z-30 glass-card border-b border-sakura-200/70">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <!-- Logo & Tên -->
+            <a href="#top" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-sakura-300 to-sakura-600 flex items-center justify-center text-white shadow-md group-hover:scale-105 transition-transform">
+                    <span class="font-serif font-bold text-lg">桜</span>
+                </div>
+                <div>
+                    <span class="font-bold text-base sm:text-lg tracking-tight text-slate-800 block leading-none">Nguyễn Văn Thành Ngọc</span>
+                    <span class="text-xs font-medium text-sakura-600">FPT Polytechnic • CNTT 4.0</span>
+                </div>
+            </a>
+
+            <!-- Menu Desktop -->
+            <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-700">
+                <a href="#gioi-thieu" class="hover:text-sakura-600 transition-colors py-2">Tổng quan</a>
+                <a href="#labs-section" class="hover:text-sakura-600 transition-colors py-2">8 Bài Lab Thực Hành</a>
+                <a href="#assignment-section" class="hover:text-sakura-600 transition-colors py-2">Assignment (60%)</a>
+                <a href="#demo-app" class="hover:text-sakura-600 transition-colors py-2">App Ghi Chú AI</a>
+            </nav>
+
+            <!-- Nút bật/tắt hoa rơi & Menu Mobile -->
+            <div class="flex items-center gap-2 sm:gap-3">
+                <button id="toggle-sakura-btn" onclick="toggleSakura()" class="flex items-center gap-2 px-3 py-2 rounded-xl bg-sakura-100/80 hover:bg-sakura-200/80 text-sakura-700 text-xs sm:text-sm font-semibold transition-all border border-sakura-300/60 shadow-sm cursor-pointer" title="Bật/Tắt hiệu ứng hoa anh đào rơi">
+                    <span id="sakura-status-icon">🌸</span>
+                    <span id="sakura-status-text" class="hidden sm:inline">Hoa rơi: Bật</span>
+                </button>
+                <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="md:hidden p-2.5 rounded-xl bg-white/80 text-slate-700 hover:text-sakura-600 border border-sakura-200">
+                    <i class="fa-solid fa-bars text-lg"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Menu Mobile Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white/95 backdrop-blur-md border-b border-sakura-200 px-4 pt-2 pb-4 space-y-2">
+            <a href="#gioi-thieu" onclick="toggleMobileMenu()" class="block px-3 py-2.5 rounded-xl text-sm font-medium text-slate-700 hover:bg-sakura-50 hover:text-sakura-600">Tổng quan Portfolio</a>
+            <a href="#labs-section" onclick="toggleMobileMenu()" class="block px-3 py-2.5 rounded-xl text-sm font-medium text-slate-700 hover:bg-sakura-50 hover:text-sakura-600">Danh sách 8 Bài Lab</a>
+            <a href="#assignment-section" onclick="toggleMobileMenu()" class="block px-3 py-2.5 rounded-xl text-sm font-medium text-slate-700 hover:bg-sakura-50 hover:text-sakura-600">Assignment CNTT 4.0 (60%)</a>
+            <a href="#demo-app" onclick="toggleMobileMenu()" class="block px-3 py-2.5 rounded-xl text-sm font-medium text-slate-700 hover:bg-sakura-50 hover:text-sakura-600">Demo App Quản Lý Ghi Chú</a>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main id="top" class="relative z-20">
+
+        <!-- 1. HERO SECTION -->
+        <section id="gioi-thieu" class="pt-12 pb-16 sm:pt-20 sm:pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <div class="glass-card rounded-3xl p-6 sm:p-10 lg:p-14 relative overflow-hidden">
+                <!-- Vòng tròn ánh sáng trang trí -->
+                <div class="absolute -top-24 -right-24 w-72 h-72 bg-sakura-300/30 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="absolute -bottom-24 -left-24 w-72 h-72 bg-sakura-400/20 rounded-full blur-3xl pointer-events-none"></div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center relative z-10">
+                    <!-- Cột nội dung giới thiệu -->
+                    <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-sakura-100/90 border border-sakura-300 text-sakura-700 text-xs sm:text-sm font-semibold">
+                            <span>🌸</span>
+                            <span>Hồ Sơ Học Tập & Thực Hành • FPT Polytechnic</span>
+                        </div>
+
+                        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-800 leading-tight tracking-tight">
+                            Xin chào, mình là <br>
+                            <span class="bg-gradient-to-r from-sakura-600 via-sakura-500 to-rose-500 bg-clip-text text-transparent">
+                                Nguyễn Văn Thành Ngọc
+                            </span>
+                        </h1>
+
+                        <p class="text-slate-600 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto lg:mx-0">
+                            Chào mừng bạn đến với không gian lưu trữ học tập môn <strong>Công Nghệ Thông Tin 4.0 (CNTT 4.0)</strong>. Tại đây tổng hợp trọn vẹn <strong>8 bài Lab thực hành</strong> từ phần cứng, hệ điều hành, mạng máy tính đến tự động hóa RPA, trí tuệ nhân tạo Google AI Studio và sản phẩm <strong>Assignment cuối môn</strong>.
+                        </p>
+
+                        <!-- Các nút điều hướng nhanh -->
+                        <div class="flex flex-wrap items-center justify-center lg:justify-start gap-3 pt-2">
+                            <a href="#labs-section" class="px-6 py-3.5 rounded-2xl bg-gradient-to-r from-sakura-600 to-sakura-500 hover:from-sakura-700 hover:to-sakura-600 text-white font-semibold text-sm sm:text-base shadow-lg shadow-sakura-500/25 transition-all flex items-center gap-2">
+                                <i class="fa-solid fa-layer-group"></i>
+                                <span>Khám phá Lab 1 – 8</span>
+                            </a>
+                            <a href="#assignment-section" class="px-6 py-3.5 rounded-2xl bg-white hover:bg-sakura-50 text-sakura-700 border border-sakura-300 font-semibold text-sm sm:text-base shadow-sm transition-all flex items-center gap-2">
+                                <i class="fa-solid fa-award"></i>
+                                <span>Xem Assignment (60%)</span>
+                            </a>
+                        </div>
+
+                        <!-- Thanh truy cập nhanh từng Lab -->
+                        <div class="pt-4">
+                            <p class="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2.5">Truy cập nhanh bài thực hành:</p>
+                            <div class="flex flex-wrap justify-center lg:justify-start gap-2">
+                                <button onclick="jumpToLab(1)" class="px-3 py-1.5 rounded-xl bg-white/80 hover:bg-sakura-600 hover:text-white text-slate-700 border border-sakura-200 text-xs font-semibold transition-colors cursor-pointer">Lab 1</button>
+                                <button onclick="jumpToLab(2)" class="px-3 py-1.5 rounded-xl bg-white/80 hover:bg-sakura-600 hover:text-white text-slate-700 border border-sakura-200 text-xs font-semibold transition-colors cursor-pointer">Lab 2</button>
+                                <button onclick="jumpToLab(3)" class="px-3 py-1.5 rounded-xl bg-white/80 hover:bg-sakura-600 hover:text-white text-slate-700 border border-sakura-200 text-xs font-semibold transition-colors cursor-pointer">Lab 3</button>
+                                <button onclick="jumpToLab(4)" class="px-3 py-1.5 rounded-xl bg-white/80 hover:bg-sakura-600 hover:text-white text-slate-700 border border-sakura-200 text-xs font-semibold transition-colors cursor-pointer">Lab 4</button>
+                                <button onclick="jumpToLab(5)" class="px-3 py-1.5 rounded-xl bg-white/80 hover:bg-sakura-600 hover:text-white text-slate-700 border border-sakura-200 text-xs font-semibold transition-colors cursor-pointer">Lab 5</button>
+                                <button onclick="jumpToLab(6)" class="px-3 py-1.5 rounded-xl bg-white/80 hover:bg-sakura-600 hover:text-white text-slate-700 border border-sakura-200 text-xs font-semibold transition-colors cursor-pointer">Lab 6</button>
+                                <button onclick="jumpToLab(7)" class="px-3 py-1.5 rounded-xl bg-white/80 hover:bg-sakura-600 hover:text-white text-slate-700 border border-sakura-200 text-xs font-semibold transition-colors cursor-pointer">Lab 7</button>
+                                <button onclick="jumpToLab(8)" class="px-3 py-1.5 rounded-xl bg-white/80 hover:bg-sakura-600 hover:text-white text-slate-700 border border-sakura-200 text-xs font-semibold transition-colors cursor-pointer">Lab 8</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Cột Thẻ Thông Tin Sinh Viên (Japanese Minimalist Card) -->
+                    <div class="lg:col-span-5">
+                        <div class="bg-white/85 rounded-3xl p-6 sm:p-8 border border-sakura-200 shadow-xl relative">
+                            <div class="flex items-center justify-between border-b border-sakura-100 pb-4 mb-5">
+                                <div class="flex items-center gap-3.5">
+                                    <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-sakura-500 to-sakura-300 flex items-center justify-center text-white text-2xl font-bold shadow-md">
+                                        TN
+                                    </div>
+                                    <div>
+                                        <h2 class="font-bold text-lg text-slate-800">Nguyễn Văn Thành Ngọc</h2>
+                                        <p class="text-xs text-sakura-600 font-medium">Sinh viên Cao đẳng FPT Polytechnic</p>
+                                    </div>
+                                </div>
+                                <span class="px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-bold">
+                                    Hoàn thành 100%
+                                </span>
+                            </div>
+
+                            <!-- Thống kê tiến độ -->
+                            <div class="grid grid-cols-3 gap-3 mb-6 text-center">
+                                <div class="p-3 rounded-2xl bg-sakura-50/80 border border-sakura-100">
+                                    <div class="text-2xl font-extrabold text-sakura-600">08</div>
+                                    <div class="text-xs text-slate-600 font-medium mt-0.5">Bài Lab</div>
+                                </div>
+                                <div class="p-3 rounded-2xl bg-sakura-50/80 border border-sakura-100">
+                                    <div class="text-2xl font-extrabold text-sakura-600">02</div>
+                                    <div class="text-xs text-slate-600 font-medium mt-0.5">Phần ASM</div>
+                                </div>
+                                <div class="p-3 rounded-2xl bg-sakura-50/80 border border-sakura-100">
+                                    <div class="text-2xl font-extrabold text-sakura-600">AI</div>
+                                    <div class="text-xs text-slate-600 font-medium mt-0.5">NotebookLM</div>
+                                </div>
+                            </div>
+
+                            <!-- Mục tiêu môn học (Từ PDF Assignment) -->
+                            <div class="space-y-2.5 text-sm">
+                                <p class="font-bold text-slate-700 flex items-center gap-2">
+                                    <i class="fa-solid fa-bullseye text-sakura-500"></i>
+                                    Mục tiêu môn học CNTT 4.0:
+                                </p>
+                                <ul class="space-y-2 text-slate-600 text-xs sm:text-sm">
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-sakura-500 font-bold">•</span>
+                                        <span><strong>(A)</strong> Hiểu tổng quan sự phát triển & xu hướng tương lai của CNTT 4.0.</span>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-sakura-500 font-bold">•</span>
+                                        <span><strong>(B)</strong> Ứng dụng công cụ số, Cloud, RPA & AI hiệu quả trong học tập.</span>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-sakura-500 font-bold">•</span>
+                                        <span><strong>(C)</strong> Tự thiết kế & xây dựng ứng dụng cá nhân thông minh.</span>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-sakura-500 font-bold">•</span>
+                                        <span><strong>(D)</strong> Định hướng chuyên ngành, nghề nghiệp & đạo đức số.</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. KHU VỰC TỔNG HỢP 8 BÀI LAB -->
+        <section id="labs-section" class="py-12 sm:py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <div class="text-center max-w-3xl mx-auto mb-10">
+                <span class="inline-block px-3.5 py-1 rounded-full bg-sakura-100 text-sakura-700 text-xs font-bold uppercase tracking-wider mb-3">
+                    Lộ Trình Thực Hành
+                </span>
+                <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-800 mb-3">
+                    Tổng Hợp 8 Bài Lab Thực Hành
+                </h2>
+                <p class="text-slate-600 text-sm sm:text-base">
+                    Chọn từng thẻ bài Lab bên dưới để xem chi tiết mục tiêu, nội dung từng bài tập và ghi chú thực hành của <strong>Nguyễn Văn Thành Ngọc</strong>.
+                </p>
+            </div>
+
+            <!-- Bộ lọc danh mục Lab -->
+            <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-8">
+                <button onclick="filterLabs('all')" id="filter-all" class="lab-filter-btn px-4 py-2 rounded-2xl text-xs sm:text-sm font-semibold bg-sakura-600 text-white shadow-md transition-all cursor-pointer">
+                    Tất cả (8 Lab)
+                </button>
+                <button onclick="filterLabs('foundation')" id="filter-foundation" class="lab-filter-btn px-4 py-2 rounded-2xl text-xs sm:text-sm font-semibold bg-white/80 text-slate-700 hover:bg-sakura-100 border border-sakura-200 transition-all cursor-pointer">
+                    Nền tảng & Phần cứng (Lab 1-3)
+                </button>
+                <button onclick="filterLabs('network')" id="filter-network" class="lab-filter-btn px-4 py-2 rounded-2xl text-xs sm:text-sm font-semibold bg-white/80 text-slate-700 hover:bg-sakura-100 border border-sakura-200 transition-all cursor-pointer">
+                    Cloud & Mạng (Lab 4-5)
+                </button>
+                <button onclick="filterLabs('ai')" id="filter-ai" class="lab-filter-btn px-4 py-2 rounded-2xl text-xs sm:text-sm font-semibold bg-white/80 text-slate-700 hover:bg-sakura-100 border border-sakura-200 transition-all cursor-pointer">
+                    Tự động hóa, AI & Đạo đức số (Lab 6-8)
+                </button>
+            </div>
+
+            <!-- Lưới 8 Thẻ Lab -->
+            <div id="labs-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
+                <!-- Nội dung thẻ Lab sẽ được render tự động bằng JavaScript để đảm bảo sạch sẽ và dễ tương tác -->
+            </div>
+        </section>
+
+        <!-- 3. KHU VỰC ASSIGNMENT CNTT 4.0 (CHIẾM 60% ĐIỂM MÔN HỌC) -->
+        <section id="assignment-section" class="py-12 sm:py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <div class="glass-card rounded-3xl p-6 sm:p-10 lg:p-12">
+                <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-sakura-200 pb-6 mb-8">
+                    <div>
+                        <span class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-sakura-600 text-white text-xs font-bold uppercase tracking-wider mb-3">
+                            <i class="fa-solid fa-star"></i> Trọng số 60% điểm môn học
+                        </span>
+                        <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-800">
+                            Assignment Cuối Môn CNTT 4.0
+                        </h2>
+                        <p class="text-slate-600 text-sm sm:text-base mt-1">
+                            Thực hiện bởi: <strong>Nguyễn Văn Thành Ngọc</strong> • Đóng gói chuẩn: <code class="px-2 py-0.5 rounded bg-sakura-100 text-sakura-800 text-xs font-mono">NguyenVanThanhNgoc_CNTT4.0_Assignment.zip</code>
+                        </p>
+                    </div>
+                    <div class="flex gap-2 text-xs font-semibold">
+                        <span class="px-3 py-1.5 rounded-xl bg-white border border-sakura-200 text-slate-700">Giai đoạn 1: 10%</span>
+                        <span class="px-3 py-1.5 rounded-xl bg-white border border-sakura-200 text-slate-700">Giai đoạn 2: 10%</span>
+                        <span class="px-3 py-1.5 rounded-xl bg-sakura-100 border border-sakura-300 text-sakura-800">Bảo vệ: 40%</span>
+                    </div>
+                </div>
+
+                <!-- 2 Phần chính của Assignment -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
+                    <!-- PHẦN 1: Trợ lý học tập Google NotebookLM -->
+                    <div class="bg-white/85 rounded-3xl p-6 sm:p-8 border border-sakura-200 shadow-sm flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="px-3.5 py-1 rounded-xl bg-indigo-50 text-indigo-700 border border-indigo-200 text-xs font-bold">
+                                    PHẦN 1 • GOOGLE NOTEBOOKLM
+                                </span>
+                                <span class="text-emerald-600 text-xs font-bold flex items-center gap-1">
+                                    <i class="fa-solid fa-circle-check"></i> Đã hoàn thành
+                                </span>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-800 mb-2">
+                                Tự Tạo “Trợ Lý Học Tập” & Thư Viện Số Cá Nhân
+                            </h3>
+                            <p class="text-slate-600 text-sm mb-5">
+                                Khai thác sức mạnh của <strong>Google NotebookLM</strong> để tổng hợp, hệ thống hóa toàn bộ học liệu môn CNTT 4.0 thành trợ lý hỏi đáp thông minh phục vụ ôn tập.
+                            </p>
+
+                            <div class="space-y-3 text-sm">
+                                <div class="p-3.5 rounded-2xl bg-sakura-50/70 border border-sakura-100">
+                                    <div class="font-bold text-slate-800 mb-1">Y1. Thu thập trọn bộ học liệu môn học</div>
+                                    <p class="text-slate-600 text-xs">Đầy đủ 8 slide bài giảng môn CNTT 4.0 của FPT Polytechnic được nạp vào nguồn dữ liệu (Sources).</p>
+                                </div>
+                                <div class="p-3.5 rounded-2xl bg-sakura-50/70 border border-sakura-100">
+                                    <div class="font-bold text-slate-800 mb-1">Y2. Đa dạng định dạng Thư viện số</div>
+                                    <ul class="text-slate-600 text-xs space-y-1 mt-1">
+                                        <li>• <strong>Tập tin (File):</strong> Tài liệu PDF Lab 1–8, file báo cáo Word/Docs.</li>
+                                        <li>• <strong>Hình ảnh & Video:</strong> Sơ đồ kiến trúc máy tính, video hướng dẫn RPA & AI.</li>
+                                        <li>• <strong>Link tham chiếu:</strong> Website ICANN, VNNIC, Google AI Studio, Microsoft Learn.</li>
+                                        <li>• <strong>Ghi chú cá nhân:</strong> Tóm tắt ý chính & câu hỏi ôn tập của Nguyễn Văn Thành Ngọc.</li>
+                                    </ul>
+                                </div>
+                                <div class="p-3.5 rounded-2xl bg-sakura-50/70 border border-sakura-100">
+                                    <div class="font-bold text-slate-800 mb-1">Y3. Mở rộng thư viện các môn học khác</div>
+                                    <p class="text-slate-600 text-xs">Nhân rộng mô hình NotebookLM cho các môn chuyên ngành CNTT tại FPT Polytechnic.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 pt-4 border-t border-sakura-100 flex items-center justify-between">
+                            <span class="text-xs text-slate-500">Công cụ: Google NotebookLM</span>
+                            <a href="https://notebooklm.google.com/" target="_blank" rel="noopener noreferrer" class="text-xs font-bold text-sakura-600 hover:text-sakura-700 flex items-center gap-1">
+                                Mở NotebookLM <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- PHẦN 2: Xây dựng ứng dụng cá nhân -->
+                    <div class="bg-white/85 rounded-3xl p-6 sm:p-8 border border-sakura-200 shadow-sm flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="px-3.5 py-1 rounded-xl bg-sakura-100 text-sakura-700 border border-sakura-300 text-xs font-bold">
+                                    PHẦN 2 • GOOGLE AI STUDIO & DRAW.IO
+                                </span>
+                                <span class="text-emerald-600 text-xs font-bold flex items-center gap-1">
+                                    <i class="fa-solid fa-circle-check"></i> Có bản Demo bên dưới
+                                </span>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-800 mb-2">
+                                Xây Dựng Ứng Dụng “Quản Lý Ghi Chú Cá Nhân”
+                            </h3>
+                            <p class="text-slate-600 text-sm mb-5">
+                                Kết hợp tư duy thiết kế giao diện trên <strong>VS Code + Draw.IO / Figma</strong> và lập trình tạo ứng dụng thông minh bằng <strong>Google AI Studio</strong>.
+                            </p>
+
+                            <div class="space-y-3 text-sm">
+                                <div class="p-3.5 rounded-2xl bg-sakura-50/70 border border-sakura-100">
+                                    <div class="font-bold text-slate-800 mb-1">Y4. Bản vẽ phác thảo Wireframe chi tiết</div>
+                                    <p class="text-slate-600 text-xs">Thiết kế đầy đủ: Giao diện chính, giao diện thêm/sửa/tìm kiếm ghi chú và luồng vận hành các chức năng cốt lõi.</p>
+                                </div>
+                                <div class="p-3.5 rounded-2xl bg-sakura-50/70 border border-sakura-100">
+                                    <div class="font-bold text-slate-800 mb-1">Y5. Dữ liệu thực tế & Quá trình áp dụng</div>
+                                    <p class="text-slate-600 text-xs">Lưu trữ tối thiểu <strong>10 ghi chú cá nhân</strong> có ý nghĩa học tập và duy trì sử dụng liên tục trong <strong>ít nhất 5 ngày</strong>.</p>
+                                </div>
+                                <div class="p-3.5 rounded-2xl bg-sakura-50/70 border border-sakura-100">
+                                    <div class="font-bold text-slate-800 mb-1">Y6. Tích hợp Trí tuệ nhân tạo (AI)</div>
+                                    <p class="text-slate-600 text-xs">Ứng dụng AI hỗ trợ phân loại thẻ (Tag), tóm tắt nhanh nội dung ghi chú và gợi ý kế hoạch học tập.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 pt-4 border-t border-sakura-100 flex items-center justify-between">
+                            <span class="text-xs text-slate-500">Công cụ: Google AI Studio, Draw.IO</span>
+                            <a href="#demo-app" class="text-xs font-bold text-sakura-600 hover:text-sakura-700 flex items-center gap-1">
+                                Trải nghiệm Demo ngay <i class="fa-solid fa-arrow-down"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. MINI APP: QUẢN LÝ GHI CHÚ CÁ NHÂN (DEMO ASSIGNMENT) -->
+        <section id="demo-app" class="py-12 sm:py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <div class="text-center max-w-3xl mx-auto mb-10">
+                <span class="inline-block px-3.5 py-1 rounded-full bg-sakura-100 text-sakura-700 text-xs font-bold uppercase tracking-wider mb-3">
+                    Sản Phẩm Thực Hành Assignment • Phần 2
+                </span>
+                <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-800 mb-3">
+                    SakuraNote — Quản Lý Ghi Chú Cá Nhân
+                </h2>
+                <p class="text-slate-600 text-sm sm:text-base">
+                    Ứng dụng minh họa trực tiếp sản phẩm Assignment của <strong>Nguyễn Văn Thành Ngọc</strong>. Dữ liệu được lưu tự động trên trình duyệt (<code class="text-xs bg-white px-1.5 py-0.5 rounded border border-sakura-200">localStorage</code>), tích hợp bộ lọc danh mục và trợ lý AI tóm tắt nhanh.
+                </p>
+            </div>
+
+            <div class="glass-card rounded-3xl p-5 sm:p-8 lg:p-10 shadow-xl">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                    <!-- Cột trái: Form thêm ghi chú mới -->
+                    <div class="lg:col-span-4 space-y-4">
+                        <div class="bg-white/90 rounded-2xl p-5 border border-sakura-200 shadow-sm">
+                            <h3 class="font-bold text-lg text-slate-800 mb-4 flex items-center gap-2">
+                                <span class="w-8 h-8 rounded-xl bg-sakura-100 text-sakura-600 flex items-center justify-center text-sm">
+                                    <i class="fa-solid fa-pen-nib"></i>
+                                </span>
+                                Tạo Ghi Chú Mới
+                            </h3>
+
+                            <form id="note-form" onsubmit="addNote(event)" class="space-y-3.5">
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-700 mb-1">Tiêu đề ghi chú *</label>
+                                    <input type="text" id="note-title" required placeholder="VD: Ôn tập lệnh ipconfig & Ping Lab 5..." class="w-full px-3.5 py-2.5 rounded-xl bg-sakura-50/50 border border-sakura-200 text-sm focus:outline-none focus:border-sakura-500 focus:bg-white transition-colors">
+                                </div>
+
+                                <div class="grid grid-cols-2 gap-2.5">
+                                    <div>
+                                        <label class="block text-xs font-semibold text-slate-700 mb-1">Chủ đề / Lab</label>
+                                        <select id="note-category" class="w-full px-3 py-2.5 rounded-xl bg-sakura-50/50 border border-sakura-200 text-xs sm:text-sm focus:outline-none focus:border-sakura-500 focus:bg-white">
+                                            <option value="Lab 1-3: Nền tảng">Lab 1-3: Nền tảng</option>
+                                            <option value="Lab 4-5: Cloud & Mạng">Lab 4-5: Cloud & Mạng</option>
+                                            <option value="Lab 6: Tự động hóa">Lab 6: Tự động hóa</option>
+                                            <option value="Lab 7: AI Studio">Lab 7: AI Studio</option>
+                                            <option value="Lab 8: An toàn số">Lab 8: An toàn số</option>
+                                            <option value="Assignment">Assignment 60%</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-semibold text-slate-700 mb-1">Ngày áp dụng</label>
+                                        <input type="date" id="note-date" required class="w-full px-3 py-2.5 rounded-xl bg-sakura-50/50 border border-sakura-200 text-xs sm:text-sm focus:outline-none focus:border-sakura-500 focus:bg-white">
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-700 mb-1">Nội dung chi tiết *</label>
+                                    <textarea id="note-content" rows="4" required placeholder="Nhập nội dung kiến thức, câu lệnh hoặc ghi chú thực hành..." class="w-full px-3.5 py-2.5 rounded-xl bg-sakura-50/50 border border-sakura-200 text-sm focus:outline-none focus:border-sakura-500 focus:bg-white transition-colors"></textarea>
+                                </div>
+
+                                <button type="submit" class="w-full py-3 rounded-xl bg-gradient-to-r from-sakura-600 to-sakura-500 hover:from-sakura-700 hover:to-sakura-600 text-white font-semibold text-sm shadow-md shadow-sakura-500/20 transition-all flex items-center justify-center gap-2 cursor-pointer">
+                                    <i class="fa-solid fa-plus"></i>
+                                    <span>Lưu Ghi Chú</span>
+                                </button>
+                            </form>
+                        </div>
+
+                        <!-- Trợ lý AI tóm tắt ghi chú (Yêu cầu mở rộng Y6) -->
+                        <div class="bg-gradient-to-br from-sakura-600 to-rose-500 rounded-2xl p-5 text-white shadow-md">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-xs font-bold uppercase tracking-wider bg-white/20 px-2.5 py-0.5 rounded-full">
+                                    <i class="fa-solid fa-wand-magic-sparkles mr-1"></i> AI Assistant (Y6)
+                                </span>
+                                <span id="note-count-badge" class="text-xs font-bold bg-white text-sakura-700 px-2.5 py-0.5 rounded-full">0 ghi chú</span>
+                            </div>
+                            <p class="text-xs text-sakura-100 mb-3 leading-relaxed">
+                                Phân tích tự động tiến độ ghi chú của Nguyễn Văn Thành Ngọc theo tiêu chuẩn Assignment (tối thiểu 10 ghi chú / 5 ngày).
+                            </p>
+                            <button onclick="analyzeNotesWithAI()" class="w-full py-2.5 rounded-xl bg-white text-sakura-700 hover:bg-sakura-50 font-bold text-xs transition-colors shadow-sm cursor-pointer">
+                                ✨ Phân tích & Đánh giá tiến độ bằng AI
+                            </button>
+                            <div id="ai-summary-box" class="hidden mt-3 p-3 rounded-xl bg-black/20 text-xs leading-relaxed border border-white/20"></div>
+                        </div>
+                    </div>
+
+                    <!-- Cột phải: Danh sách & Tìm kiếm ghi chú -->
+                    <div class="lg:col-span-8 flex flex-col">
+                        <!-- Thanh tìm kiếm & nút khôi phục mẫu -->
+                        <div class="flex flex-col sm:flex-row gap-3 mb-5">
+                            <div class="relative flex-1">
+                                <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                                <input type="text" id="note-search" oninput="renderNotes()" placeholder="Tìm kiếm ghi chú theo tiêu đề, nội dung hoặc thẻ Lab..." class="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white/90 border border-sakura-200 text-sm focus:outline-none focus:border-sakura-500">
+                            </div>
+                            <button onclick="resetSampleNotes()" class="px-4 py-2.5 rounded-xl bg-white/90 hover:bg-sakura-50 text-slate-700 border border-sakura-200 text-xs font-semibold transition-colors flex items-center justify-center gap-1.5 cursor-pointer" title="Khôi phục 10 ghi chú mẫu chuẩn Assignment">
+                                <i class="fa-solid fa-rotate-left text-sakura-600"></i>
+                                <span>Nạp 10 ghi chú mẫu</span>
+                            </button>
+                        </div>
+
+                        <!-- Danh sách thẻ ghi chú -->
+                        <div id="notes-list" class="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-[540px] overflow-y-auto pr-1">
+                            <!-- Render bằng JS -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- 5. FOOTER -->
+    <footer class="relative z-20 mt-12 border-t border-sakura-200/80 bg-white/75 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
+                <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-xl bg-sakura-600 text-white flex items-center justify-center font-serif font-bold">
+                        桜
+                    </div>
+                    <div>
+                        <p class="font-bold text-slate-800 text-sm sm:text-base">Nguyễn Văn Thành Ngọc</p>
+                        <p class="text-xs text-slate-500">Sinh viên Cao đẳng FPT Polytechnic • Môn học: Công Nghệ Thông Tin 4.0 (CNTT 4.0)</p>
+                    </div>
+                </div>
+
+                <div class="text-xs text-slate-500">
+                    <p>Thiết kế phong cách Nhật Bản Sakura • Tổng hợp Lab 1 – 8 & Assignment</p>
+                    <p class="mt-0.5 text-sakura-600 font-medium">© 2026 Nguyễn Văn Thành Ngọc. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- MODAL XEM CHI TIẾT BÀI LAB -->
+    <div id="lab-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm">
+        <div class="bg-white rounded-3xl max-w-3xl w-full max-h-[90vh] overflow-hidden shadow-2xl border border-sakura-200 flex flex-col animate-[fadeIn_0.2s_ease-out]">
+            <!-- Header Modal -->
+            <div class="px-6 py-5 bg-gradient-to-r from-sakura-50 to-white border-b border-sakura-100 flex items-center justify-between">
+                <div>
+                    <span id="modal-lab-badge" class="inline-block px-3 py-0.5 rounded-full bg-sakura-600 text-white text-xs font-bold mb-1">LAB 1</span>
+                    <h3 id="modal-lab-title" class="text-lg sm:text-xl font-extrabold text-slate-800">Tiêu đề bài Lab</h3>
+                </div>
+                <button onclick="closeLabModal()" class="w-9 h-9 rounded-full bg-sakura-100 hover:bg-sakura-200 text-sakura-700 flex items-center justify-center transition-colors cursor-pointer">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <!-- Body Modal -->
+            <div id="modal-lab-body" class="p-6 overflow-y-auto space-y-5 text-sm text-slate-700">
+                <!-- Nội dung chi tiết được chèn từ JS -->
+            </div>
+
+            <!-- Footer Modal -->
+            <div class="px-6 py-4 bg-sakura-50/70 border-t border-sakura-100 flex items-center justify-between">
+                <span class="text-xs font-medium text-slate-500">Thực hiện: <strong class="text-slate-700">Nguyễn Văn Thành Ngọc</strong></span>
+                <div class="flex gap-2">
+                    <button id="prev-lab-btn" class="px-3.5 py-2 rounded-xl bg-white hover:bg-sakura-100 text-slate-700 border border-sakura-200 text-xs font-semibold transition-colors cursor-pointer">
+                        <i class="fa-solid fa-chevron-left mr-1"></i> Lab trước
+                    </button>
+                    <button id="next-lab-btn" class="px-3.5 py-2 rounded-xl bg-sakura-600 hover:bg-sakura-700 text-white text-xs font-semibold transition-colors cursor-pointer">
+                        Lab tiếp <i class="fa-solid fa-chevron-right ml-1"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // ==========================================
+        // 1. DỮ LIỆU ĐẦY ĐỦ 8 BÀI LAB (TỪ PDF)
+        // ==========================================
+        const labsData = [
+            {
+                id: 1,
+                category: 'foundation',
+                badge: 'LAB 1',
+                title: 'Tìm hiểu về Công nghệ thông tin 4.0',
+                icon: 'fa-microchip',
+                shortDesc: 'Khám phá AI, IoT, Big Data, Cloud Computing và các nghề nghiệp CNTT trong kỷ nguyên số.',
+                objectives: [
+                    'Hiểu được các khái niệm cơ bản trong kỷ nguyên số 4.0.',
+                    'Nêu được những vấn đề, công nghệ và nghề nghiệp CNTT mà bản thân yêu thích.'
+                ],
+                exercises: [
+                    {
+                        name: 'Bài 1 (2 điểm): Tìm hiểu một công nghệ 4.0',
+                        detail: 'Phân tích chuyên sâu 1 trong 4 trụ cột: AI, IoT, Big Data, Cloud Computing (Khái niệm, ví dụ ứng dụng, lĩnh vực sử dụng, ví dụ thực tế tại Việt Nam như FPT.AI, Viettel Cloud) và giải đáp vai trò giải quyết vấn đề thực tế.'
+                    },
+                    {
+                        name: 'Bài 2 (2 điểm): Quan sát công nghệ 4.0 trong đời sống',
+                        detail: 'Khảo sát tối thiểu 3 ứng dụng quen thuộc hằng ngày: Thanh toán (MoMo - Cloud, Mobile), Giao thông (Google Maps - Big Data), Mua sắm (Shopee - AI gợi ý sản phẩm).'
+                    },
+                    {
+                        name: 'Bài 3 (2 điểm): So sánh hai công nghệ 4.0',
+                        detail: 'Lập bảng đối chiếu mục đích, ứng dụng và lĩnh vực giữa 2 công nghệ (ví dụ: AI và Big Data) để đánh giá mức độ ảnh hưởng trong tương lai.'
+                    },
+                    {
+                        name: 'Bài 4 (2 điểm): Nghề CNTT trong thời đại 4.0',
+                        detail: 'Tìm hiểu vị trí nghề nghiệp (Software Developer, AI Engineer, Data Analyst, Cyber-Security): công việc chính, kỹ năng cần có và lộ trình rèn luyện bản thân.'
+                    }
+                ],
+                studentNote: 'Nguyễn Văn Thành Ngọc đã hoàn thành báo cáo phân tích chuyên sâu về Trí tuệ nhân tạo (AI) & Điện toán đám mây (Cloud), kèm bảng so sánh và định hướng nghề Software Developer / AI Engineer.'
+            },
+            {
+                id: 2,
+                category: 'foundation',
+                badge: 'LAB 2',
+                title: 'Tìm hiểu về Thiết bị máy tính',
+                icon: 'fa-computer',
+                shortDesc: 'Nhận diện phần cứng Desktop PC, lựa chọn Laptop cho sinh viên CNTT và so sánh HDD vs SSD.',
+                objectives: [
+                    'Nhận biết được các thành phần phần cứng máy tính và thông số kỹ thuật của thiết bị.',
+                    'Biết cách lựa chọn cấu hình máy tính phù hợp với nhu cầu học tập CNTT.'
+                ],
+                exercises: [
+                    {
+                        name: 'Bài 1 (2 điểm): Nhận diện thành phần phần cứng máy tính để bàn (Desktop PC)',
+                        detail: 'Khảo sát cấu hình PC thực tế (CPU Intel Core i5/i7, RAM, Ổ cứng HDD/SSD, Mainboard, Màn hình, Bàn phím, Chuột), phân tích chức năng từng linh kiện và xác định bộ não xử lý, thiết bị lưu trữ, thiết bị nhập.'
+                    },
+                    {
+                        name: 'Bài 2 (3 điểm): Lựa chọn máy tính (Laptop) cho sinh viên CNTT',
+                        detail: 'Đề xuất mẫu Laptop tối ưu cho lập trình (CPU đa nhân, RAM 16GB, SSD NVMe 512GB, màn hình Full HD chống chói) và phương án nâng cấp linh kiện nếu có thêm 5 triệu đồng.'
+                    },
+                    {
+                        name: 'Bài 3 (3 điểm): So sánh ổ cứng HDD và SSD',
+                        detail: 'So sánh công nghệ lưu trữ (đĩa từ cơ học vs chip nhớ Flash), tốc độ đọc/ghi, giá thành, độ bền chống sốc và lý do SSD trở thành tiêu chuẩn trên laptop hiện đại.'
+                    }
+                ],
+                studentNote: 'Đã khảo sát cấu hình PC tại Phong Vũ/GearVN và đề xuất cấu hình Laptop RAM 16GB + SSD 512GB NVMe đáp ứng tốt việc chạy máy ảo và lập trình tại FPT Polytechnic.'
+            },
+            {
+                id: 3,
+                category: 'foundation',
+                badge: 'LAB 3',
+                title: 'Tìm hiểu về Hệ điều hành của máy tính',
+                icon: 'fa-windows',
+                shortDesc: 'Kiểm tra thông số OS, giám sát tiến trình Task Manager và phân quyền tài khoản Admin / Standard User.',
+                objectives: [
+                    'Xem được các thông tin cơ bản và chuyên sâu của hệ điều hành (Windows / macOS).',
+                    'Tạo tài khoản người dùng tiêu chuẩn (Standard User) theo nguyên tắc đặc quyền tối thiểu.',
+                    'Sử dụng kết hợp và chuyển đổi linh hoạt giữa tài khoản Admin và Standard User.'
+                ],
+                exercises: [
+                    {
+                        name: 'Bài 1 (2 điểm): Tìm hiểu thông tin chi tiết về Hệ điều hành',
+                        detail: 'Thực hành 3 cấp độ: Giao diện đồ họa (Settings > System > About), Công cụ hệ thống (msinfo32 xem HAL & drivers) và Dòng lệnh (lệnh systeminfo trên CMD hoặc uname -a trên macOS).'
+                    },
+                    {
+                        name: 'Bài 2 (2 điểm): Giám sát Tiến trình và Hiệu suất hệ thống',
+                        detail: 'Sử dụng Task Manager (Ctrl + Shift + Esc) / Activity Monitor để theo dõi mức chiếm dụng CPU, RAM, GPU theo thời gian thực và thực hành End Task giải phóng tài nguyên.'
+                    },
+                    {
+                        name: 'Bài 3 & Bài 4 (4 điểm): Tạo & Sử dụng kết hợp tài khoản Admin và Standard User',
+                        detail: 'Áp dụng nguyên tắc Least Privilege: tạo tài khoản Standard User không cần tài khoản Microsoft trên Windows 11 và thực hành chuyển đổi người dùng nhanh (Fast User Switching).'
+                    },
+                    {
+                        name: 'Bài 5 (2 điểm): Trải nghiệm ảo hóa máy ảo (Virtualization)',
+                        detail: 'Tìm hiểu và trải nghiệm cài đặt hệ điều hành trên máy ảo (VMware / VirtualBox) để thử nghiệm môi trường tách biệt an toàn.'
+                    }
+                ],
+                studentNote: 'Đã thực hành đầy đủ các lệnh msinfo32, systeminfo, quản lý tiến trình Task Manager và chụp ảnh minh chứng tạo thành công tài khoản Standard User trên Windows 11.'
+            },
+            {
+                id: 4,
+                category: 'network',
+                badge: 'LAB 4',
+                title: 'Phần mềm, Điện toán đám mây, Nền tảng',
+                icon: 'fa-cloud',
+                shortDesc: 'Cài đặt bộ công cụ học tập, lưu trữ đám mây Google Drive/OneDrive, Google Maps đa nền tảng & OpenOffice.',
+                objectives: [
+                    'Tải và cài đặt thành thạo các phần mềm thông dụng và mã nguồn mở.',
+                    'Đăng ký, đồng bộ dữ liệu trên các dịch vụ lưu trữ đám mây.',
+                    'Trải nghiệm đồng bộ ứng dụng đa nền tảng giữa máy tính và điện thoại.'
+                ],
+                exercises: [
+                    {
+                        name: 'Bài 1 (2 điểm): Cài đặt các phần mềm thông dụng',
+                        detail: 'Tải và cài đặt từ nguồn chính chủ: Trình duyệt Microsoft Edge, Google Chrome, phần mềm nén giải nén WinRAR và môi trường lập trình Visual Studio Code (VS Code).'
+                    },
+                    {
+                        name: 'Bài 2 (2 điểm): Đăng ký và sử dụng dịch vụ lưu trữ đám mây',
+                        detail: 'Thiết lập không gian lưu trữ trên Google Drive và Microsoft OneDrive để sao lưu tài liệu học tập môn CNTT 4.0 mọi lúc mọi nơi.'
+                    },
+                    {
+                        name: 'Bài 3 & Bài 5 (4 điểm): Sử dụng Google Maps đa nền tảng & Chia sẻ hành trình',
+                        detail: 'Tìm lộ trình từ nhà đến trường FPT Polytechnic trên máy tính, gửi tuyến đường sang điện thoại và thực hành chia sẻ vị trí hành trình trực tiếp.'
+                    },
+                    {
+                        name: 'Bài 4 (2 điểm): Tìm hiểu và sử dụng phần mềm nguồn mở Apache OpenOffice',
+                        detail: 'Cài đặt và trải nghiệm bộ công cụ văn phòng mã nguồn mở miễn phí Apache OpenOffice (Writer, Calc, Impress, Draw, Base).'
+                    }
+                ],
+                studentNote: 'Đã cài đặt hoàn chỉnh VS Code, Chrome, Edge, WinRAR, OpenOffice và tổ chức thư mục lưu trữ môn CNTT 4.0 đồng bộ trên Google Drive.'
+            },
+            {
+                id: 5,
+                category: 'network',
+                badge: 'LAB 5',
+                title: 'Mạng máy tính, Mạng Internet',
+                icon: 'fa-network-wired',
+                shortDesc: 'Xác định IPv4, địa chỉ MAC, kiểm tra độ trễ mạng bằng lệnh Ping và tra cứu tên miền ICANN / VNNIC.',
+                objectives: [
+                    'Phân biệt và xem được thông tin địa chỉ IP (logic) và địa chỉ MAC (vật lý) của máy tính.',
+                    'Kiểm tra kết nối mạng, độ trễ (latency) và tra cứu thông tin quản trị tên miền quốc tế & Việt Nam.'
+                ],
+                exercises: [
+                    {
+                        name: 'Bài 1 (2 điểm): Xác định các địa chỉ định danh của thiết bị (IP và MAC Address)',
+                        detail: 'Sử dụng Command Prompt với lệnh ipconfig /all để xác định IPv4 Address (32-bit), Physical Address / MAC (48-bit) và Default Gateway (địa chỉ Router).'
+                    },
+                    {
+                        name: 'Bài 2 (2 điểm): Kiểm tra kết nối mạng và đo độ trễ (Ping)',
+                        detail: 'Chạy lệnh ping google.com để kiểm tra giao thức ICMP, phân tích chỉ số thời gian phản hồi Time (ms) và tỷ lệ mất gói tin Lost (%).'
+                    },
+                    {
+                        name: 'Bài 3 (2 điểm): Tra cứu thông tin quản trị tên miền quốc tế (ICANN Whois)',
+                        detail: 'Sử dụng whois.icann.org hoặc who.is để tra cứu thông tin đăng ký, ngày khởi tạo và máy chủ DNS của các tên miền quốc tế: google.com, microsoft.com, vnexpress.net, fpt.com.'
+                    },
+                    {
+                        name: 'Bài 4 (2 điểm): Tra cứu thông tin quản trị tên miền Việt Nam (.vn) qua VNNIC',
+                        detail: 'Truy cập Trung tâm Internet Việt Nam (vnnic.vn/whois-information) để kiểm tra chủ thể quản lý tên miền quốc gia: fpt.vn, fptshop.com.vn, caodang.fpt.edu.vn.'
+                    }
+                ],
+                studentNote: 'Đã thực hành thành công bộ lệnh ipconfig /all, ping trên CMD và xuất kết quả tra cứu Whois cho hệ thống tên miền của FPT trên cả ICANN và VNNIC.'
+            },
+            {
+                id: 6,
+                category: 'ai',
+                badge: 'LAB 6',
+                title: 'Tư duy lập trình và Tự động hóa',
+                icon: 'fa-robot',
+                shortDesc: 'Phác thảo giao diện ứng dụng ghi chú bằng VS Code + Draw.IO và tự động hóa quy trình với Power Automate Desktop.',
+                objectives: [
+                    'Sử dụng VS Code tích hợp Draw.IO Extension để phác thảo giao diện (Wireframe) phần mềm.',
+                    'Cài đặt và trải nghiệm tự động hóa quy trình bằng robot (RPA) với Microsoft Power Automate Desktop (PAD).'
+                ],
+                exercises: [
+                    {
+                        name: 'Bài 1 (4 điểm): Vẽ phác thảo giao diện ứng dụng quản lý ghi chú cá nhân',
+                        detail: 'Cài đặt extension Draw.io Integration trên VS Code, tạo file .drawio.svg thiết kế giao diện ứng dụng ghi chú (gồm thời gian, nội dung ghi chú, nút thêm/xóa) làm tiền đề cho Lab 7 và Assignment.'
+                    },
+                    {
+                        name: 'Bài 2 (3 điểm): Cài đặt phần mềm Microsoft Power Automate Desktop (PAD)',
+                        detail: 'Tải và cài đặt công cụ RPA miễn phí từ Microsoft Store trên Windows 11, tìm hiểu cơ chế kéo-thả hành động tự động hóa Excel, Web, File.'
+                    },
+                    {
+                        name: 'Bài 3 (2 điểm): Trải nghiệm “tự động hóa” từ flow ví dụ có sẵn',
+                        detail: 'Khám phá mục Example categories trong PAD (Excel Automation, Web Automation, Desktop Automation, Text Manipulation) và chạy thử nghiệm các robot tự động.'
+                    }
+                ],
+                studentNote: 'Đã hoàn thiện bản vẽ phác thảo Wireframe cho ứng dụng SakuraNote trên VS Code + Draw.IO và chạy thử nghiệm thành công các flow tự động hóa trong Power Automate Desktop.'
+            },
+            {
+                id: 7,
+                category: 'ai',
+                badge: 'LAB 7',
+                title: 'Trí tuệ nhân tạo – AI & Ứng dụng trong công việc',
+                icon: 'fa-wand-magic-sparkles',
+                shortDesc: 'Thực hành kỹ năng Prompting, trải nghiệm Gallery và xây dựng ứng dụng ghi chú trên Google AI Studio.',
+                objectives: [
+                    'Thực hành kỹ năng viết câu lệnh (Prompt Engineering) hiệu quả.',
+                    'Trải nghiệm các mô hình Gemini đa phương thức trên Google AI Studio và tự xây dựng ứng dụng cá nhân.'
+                ],
+                exercises: [
+                    {
+                        name: 'Bài 1 (2 điểm): Làm quen với Google AI Studio',
+                        detail: 'Đăng nhập aistudio.google.com, khám phá Playground với các mô hình Gemini Flash/Pro, điều chỉnh Temperature, System Instructions và thực hành kỹ năng viết Prompt.'
+                    },
+                    {
+                        name: 'Bài 2 (3 điểm): Trải nghiệm Google AI Studio Gallery',
+                        detail: 'Truy cập mục Build > Gallery và chạy trải nghiệm ít nhất 3 ứng dụng mẫu đa phương thức (Text, Image, Video, Voice).'
+                    },
+                    {
+                        name: 'Bài 3 (3 điểm): Xây dựng ứng dụng quản lý ghi chú cá nhân với Google AI Studio',
+                        detail: 'Kết hợp kỹ năng viết Prompt (Bài 1), trải nghiệm Gallery (Bài 2) và bản phác thảo giao diện (Lab 6) để tạo hoàn chỉnh ứng dụng Quản lý ghi chú cá nhân.'
+                    }
+                ],
+                studentNote: 'Sản phẩm ứng dụng Quản lý ghi chú cá nhân SakuraNote đã được xây dựng hoàn chỉnh và tích hợp ngay trên trang web portfolio này!'
+            },
+            {
+                id: 8,
+                category: 'ai',
+                badge: 'LAB 8',
+                title: 'An toàn thông tin và Đạo đức số',
+                icon: 'fa-shield-halved',
+                shortDesc: 'Nghiên cứu An toàn thông tin, nhận diện Deepfake, Luật An ninh mạng, lập Mind-map và thuyết trình phản biện.',
+                objectives: [
+                    'Hiểu rõ các khái niệm cốt lõi về An toàn thông tin (CIA Triad) và Đạo đức số.',
+                    'Rèn luyện kỹ năng tìm kiếm, khai thác, tổng hợp thông tin thành Mind-map, thuyết trình và tư duy phản biện.'
+                ],
+                exercises: [
+                    {
+                        name: 'Bài 1 (2 điểm): Tìm kiếm thông tin đa nguồn',
+                        detail: 'Tập hợp tài liệu (Website, PDF/DOC, Hình ảnh, Video) về 3 chủ đề: An toàn thông tin, Công nghệ giả mạo Deepfake, và Các Luật/Quy định/Tiêu chuẩn an ninh mạng.'
+                    },
+                    {
+                        name: 'Bài 2 (2 điểm): Khai thác thông tin & Vẽ sơ đồ tư duy (Mind-map)',
+                        detail: 'Chọn lọc nguồn tin cậy, phân tích ý chính và hệ thống hóa kiến thức dưới dạng sơ đồ tư duy Mind-map trực quan.'
+                    },
+                    {
+                        name: 'Bài 3 (2 điểm): Trình bày thông tin tổng hợp bằng Slide',
+                        detail: 'Thiết kế slide minh họa và thuyết trình trước lớp về chủ đề phòng chống lừa đảo Deepfake và bảo vệ dữ liệu cá nhân.'
+                    },
+                    {
+                        name: 'Bài 4 (2 điểm): Đánh giá và phản biện tích cực',
+                        detail: 'Tham gia lắng nghe, đặt câu hỏi phản biện có chính kiến và lan tỏa nhận thức an toàn số đến cộng đồng sinh viên.'
+                    }
+                ],
+                studentNote: 'Đã tổng hợp hệ thống Mind-map về nhận diện Deepfake & Luật An ninh mạng Việt Nam, hoàn thành bài thuyết trình nhóm và tham gia phản biện sôi nổi trên lớp.'
+            }
+        ];
+
+        // ==========================================
+        // 2. RENDER & TƯƠNG TÁC DANH SÁCH BÀI LAB
+        // ==========================================
+        let currentLabId = 1;
+
+        function renderLabs(filter = 'all') {
+            const grid = document.getElementById('labs-grid');
+            grid.innerHTML = '';
+
+            const filtered = filter === 'all' 
+                ? labsData 
+                : labsData.filter(lab => lab.category === filter);
+
+            filtered.forEach(lab => {
+                const card = document.createElement('div');
+                card.className = 'glass-card glass-card-hover rounded-3xl p-5 sm:p-6 flex flex-col justify-between cursor-pointer group';
+                card.onclick = () => openLabModal(lab.id);
+
+                card.innerHTML = `
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="px-3 py-1 rounded-xl bg-sakura-100 text-sakura-700 font-bold text-xs tracking-wide border border-sakura-200">
+                                ${lab.badge}
+                            </span>
+                            <div class="w-10 h-10 rounded-2xl bg-white text-sakura-600 border border-sakura-200 flex items-center justify-center shadow-sm group-hover:bg-sakura-600 group-hover:text-white transition-colors">
+                                <i class="fa-solid ${lab.icon}"></i>
+                            </div>
+                        </div>
+
+                        <h3 class="font-bold text-base sm:text-lg text-slate-800 group-hover:text-sakura-600 transition-colors mb-2 line-clamp-2">
+                            ${lab.title}
+                        </h3>
+
+                        <p class="text-xs sm:text-sm text-slate-600 line-clamp-3 leading-relaxed mb-4">
+                            ${lab.shortDesc}
+                        </p>
+                    </div>
+
+                    <div class="pt-3 border-t border-sakura-100 flex items-center justify-between text-xs">
+                        <span class="text-emerald-600 font-semibold flex items-center gap-1">
+                            <i class="fa-solid fa-check-circle"></i> ${lab.exercises.length} bài tập
+                        </span>
+                        <span class="font-bold text-sakura-600 group-hover:translate-x-1 transition-transform flex items-center gap-1">
+                            Chi tiết <i class="fa-solid fa-arrow-right"></i>
+                        </span>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function filterLabs(category) {
+            document.querySelectorAll('.lab-filter-btn').forEach(btn => {
+                btn.className = 'lab-filter-btn px-4 py-2 rounded-2xl text-xs sm:text-sm font-semibold bg-white/80 text-slate-700 hover:bg-sakura-100 border border-sakura-200 transition-all cursor-pointer';
+            });
+            const activeBtn = document.getElementById(`filter-${category}`);
+            if (activeBtn) {
+                activeBtn.className = 'lab-filter-btn px-4 py-2 rounded-2xl text-xs sm:text-sm font-semibold bg-sakura-600 text-white shadow-md transition-all cursor-pointer';
+            }
+            renderLabs(category);
+        }
+
+        function openLabModal(labId) {
+            const lab = labsData.find(l => l.id === labId);
+            if (!lab) return;
+            currentLabId = labId;
+
+            document.getElementById('modal-lab-badge').textContent = `${lab.badge} • CNTT 4.0`;
+            document.getElementById('modal-lab-title').textContent = lab.title;
+
+            const body = document.getElementById('modal-lab-body');
+            body.innerHTML = `
+                <!-- Mục tiêu bài học -->
+                <div class="p-4 rounded-2xl bg-sakura-50/90 border border-sakura-200">
+                    <h4 class="font-bold text-sakura-800 mb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-bullseye text-sakura-600"></i> Mục tiêu thực hành:
+                    </h4>
+                    <ul class="space-y-1.5 text-slate-700 text-xs sm:text-sm">
+                        ${lab.objectives.map(obj => `<li class="flex items-start gap-2"><span class="text-sakura-600 font-bold">✓</span><span>${obj}</span></li>`).join('')}
+                    </ul>
+                </div>
+
+                <!-- Danh sách bài tập chi tiết -->
+                <div>
+                    <h4 class="font-bold text-slate-800 mb-3 flex items-center gap-2">
+                        <i class="fa-solid fa-list-check text-sakura-600"></i> Nội dung các bài tập thực hành:
+                    </h4>
+                    <div class="space-y-3">
+                        ${lab.exercises.map(ex => `
+                            <div class="p-4 rounded-2xl bg-white border border-slate-200/80 shadow-sm">
+                                <div class="font-bold text-slate-800 text-sm mb-1">${ex.name}</div>
+                                <p class="text-slate-600 text-xs sm:text-sm leading-relaxed">${ex.detail}</p>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+
+                <!-- Ghi chú thực hành của sinh viên -->
+                <div class="p-4 rounded-2xl bg-emerald-50/80 border border-emerald-200">
+                    <h4 class="font-bold text-emerald-800 text-xs uppercase tracking-wider mb-1 flex items-center gap-1.5">
+                        <i class="fa-solid fa-user-check"></i> Ghi chú hoàn thành • Nguyễn Văn Thành Ngọc
+                    </h4>
+                    <p class="text-emerald-900 text-xs sm:text-sm leading-relaxed">${lab.studentNote}</p>
+                </div>
+            `;
+
+            // Cập nhật nút điều hướng Lab trước / Lab tiếp
+            const prevBtn = document.getElementById('prev-lab-btn');
+            const nextBtn = document.getElementById('next-lab-btn');
+            prevBtn.onclick = () => openLabModal(labId > 1 ? labId - 1 : 8);
+            nextBtn.onclick = () => openLabModal(labId < 8 ? labId + 1 : 1);
+
+            const modal = document.getElementById('lab-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeLabModal() {
+            const modal = document.getElementById('lab-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function jumpToLab(labId) {
+            openLabModal(labId);
+        }
+
+        // Đóng modal khi bấm ra ngoài vùng trắng
+        document.getElementById('lab-modal').addEventListener('click', function(e) {
+            if (e.target === this) closeLabModal();
+        });
+
+        // ==========================================
+        // 3. MINI APP QUẢN LÝ GHI CHÚ (ASSIGNMENT Y4-Y6)
+        // ==========================================
+        const STORAGE_KEY = 'thanhngoc_sakura_notes_v1';
+
+        const defaultSampleNotes = [
+            {
+                id: 101,
+                title: '4 Trụ cột Công nghệ 4.0 (Lab 1)',
+                category: 'Lab 1-3: Nền tảng',
+                date: '2026-11-18',
+                content: 'Ghi nhớ 4 công nghệ cốt lõi: AI (Trí tuệ nhân tạo), IoT (Internet vạn vật), Big Data (Dữ liệu lớn) và Cloud Computing (Điện toán đám mây). Ứng dụng thực tế: MoMo, Google Maps, Shopee.'
+            },
+            {
+                id: 102,
+                title: 'Cấu hình Laptop chuẩn cho sinh viên CNTT (Lab 2)',
+                category: 'Lab 1-3: Nền tảng',
+                date: '2026-11-19',
+                content: 'Ưu tiên ổ cứng SSD NVMe thay vì HDD để tăng tốc độ khởi động Windows và biên dịch code. RAM tối thiểu 16GB để chạy mượt VS Code và máy ảo.'
+            },
+            {
+                id: 103,
+                title: 'Nguyên tắc đặc quyền tối thiểu Least Privilege (Lab 3)',
+                category: 'Lab 1-3: Nền tảng',
+                date: '2026-11-20',
+                content: 'Sử dụng tài khoản Standard User cho công việc hằng ngày và chỉ dùng Admin khi cài đặt phần mềm hệ thống. Lệnh kiểm tra nhanh: msinfo32 và systeminfo.'
+            },
+            {
+                id: 104,
+                title: 'Đồng bộ dữ liệu học tập trên Cloud (Lab 4)',
+                category: 'Lab 4-5: Cloud & Mạng',
+                date: '2026-11-21',
+                content: 'Tổ chức thư mục CNTT 4.0 trên Google Drive và OneDrive. Cài đặt bộ công cụ VS Code, WinRAR, Chrome, Edge và phần mềm nguồn mở Apache OpenOffice.'
+            },
+            {
+                id: 105,
+                title: 'Phân biệt địa chỉ IP và địa chỉ MAC (Lab 5)',
+                category: 'Lab 4-5: Cloud & Mạng',
+                date: '2026-11-22',
+                content: 'Dùng lệnh ipconfig /all: IPv4 là địa chỉ logic 32-bit thay đổi theo mạng; Physical Address (MAC) là địa chỉ vật lý 48-bit gắn cố định trên card mạng NIC.'
+            },
+            {
+                id: 106,
+                title: 'Tra cứu tên miền quốc tế & Việt Nam (Lab 5)',
+                category: 'Lab 4-5: Cloud & Mạng',
+                date: '2026-11-22',
+                content: 'Tên miền quốc tế (.com, .net) quản lý bởi ICANN (whois.icann.org). Tên miền quốc gia Việt Nam (.vn) quản lý bởi VNNIC (vnnic.vn).'
+            },
+            {
+                id: 107,
+                title: 'Tự động hóa RPA với Power Automate Desktop (Lab 6)',
+                category: 'Lab 6: Tự động hóa',
+                date: '2026-11-23',
+                content: 'PAD giúp tự động hóa thao tác lặp lại trên Windows như nhập Excel, đổi tên hàng loạt file, lấy dữ liệu web mà không cần viết code phức tạp.'
+            },
+            {
+                id: 108,
+                title: 'Kỹ năng viết Prompt trên Google AI Studio (Lab 7)',
+                category: 'Lab 7: AI Studio',
+                date: '2026-11-24',
+                content: 'Cấu trúc Prompt hiệu quả: Vai trò (Role) + Bối cảnh (Context) + Nhiệm vụ cụ thể (Task) + Định dạng đầu ra (Format). Tinh chỉnh Temperature phù hợp.'
+            },
+            {
+                id: 109,
+                title: 'Phòng chống lừa đảo Deepfake & Đạo đức số (Lab 8)',
+                category: 'Lab 8: An toàn số',
+                date: '2026-11-25',
+                content: 'Luôn xác minh qua kênh liên lạc thứ hai khi nhận cuộc gọi video nghi ngờ Deepfake. Tuân thủ Luật An ninh mạng và tôn trọng bản quyền số.'
+            },
+            {
+                id: 110,
+                title: 'Checklist nộp bài Assignment CNTT 4.0 (60%)',
+                category: 'Assignment',
+                date: '2026-11-25',
+                content: 'Hoàn thiện Google NotebookLM (8 slide + tài liệu), báo cáo quá trình làm ứng dụng SakuraNote, đóng gói file NguyenVanThanhNgoc_CNTT4.0_Assignment.zip.'
+            }
+        ];
+
+        function getNotes() {
+            try {
+                const raw = localStorage.getItem(STORAGE_KEY);
+                if (!raw) {
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(defaultSampleNotes));
+                    return defaultSampleNotes;
+                }
+                return JSON.parse(raw);
+            } catch (e) {
+                return defaultSampleNotes;
+            }
+        }
+
+        function saveNotes(notes) {
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(notes));
+            } catch (e) {
+                showToast('Không thể lưu vào bộ nhớ trình duyệt.', 'error');
+            }
+        }
+
+        function renderNotes() {
+            const notes = getNotes();
+            const keyword = (document.getElementById('note-search').value || '').toLowerCase().trim();
+            const listEl = document.getElementById('notes-list');
+            const badgeEl = document.getElementById('note-count-badge');
+
+            badgeEl.textContent = `${notes.length} ghi chú`;
+
+            const filtered = notes.filter(n => 
+                n.title.toLowerCase().includes(keyword) || 
+                n.content.toLowerCase().includes(keyword) ||
+                n.category.toLowerCase().includes(keyword)
+            );
+
+            if (filtered.length === 0) {
+                listEl.innerHTML = `
+                    <div class="col-span-full text-center py-12 bg-white/60 rounded-2xl border border-dashed border-sakura-300">
+                        <p class="text-slate-500 text-sm">Không tìm thấy ghi chú phù hợp. Hãy thêm ghi chú mới hoặc nạp dữ liệu mẫu!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            listEl.innerHTML = filtered.map(note => `
+                <div class="bg-white/90 rounded-2xl p-4 border border-sakura-200/80 shadow-sm hover:border-sakura-400 transition-all flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between gap-2 mb-2">
+                            <span class="px-2.5 py-0.5 rounded-lg bg-sakura-100 text-sakura-700 text-[11px] font-bold">
+                                ${escapeHTML(note.category)}
+                            </span>
+                            <span class="text-[11px] text-slate-400 font-medium">
+                                <i class="fa-regular fa-calendar mr-1"></i>${escapeHTML(note.date)}
+                            </span>
+                        </div>
+                        <h4 class="font-bold text-slate-800 text-sm mb-1.5">${escapeHTML(note.title)}</h4>
+                        <p class="text-xs text-slate-600 leading-relaxed mb-3">${escapeHTML(note.content)}</p>
+                    </div>
+                    <div class="pt-2 border-t border-sakura-50 flex items-center justify-between">
+                        <span class="text-[11px] text-slate-400">Nguyễn Văn Thành Ngọc</span>
+                        <button onclick="deleteNote(${note.id})" class="text-xs text-rose-500 hover:text-rose-700 font-semibold px-2 py-1 rounded-lg hover:bg-rose-50 transition-colors cursor-pointer" title="Xóa ghi chú này">
+                            <i class="fa-regular fa-trash-can"></i> Xóa
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function addNote(event) {
+            event.preventDefault();
+            const title = document.getElementById('note-title').value.trim();
+            const category = document.getElementById('note-category').value;
+            const date = document.getElementById('note-date').value;
+            const content = document.getElementById('note-content').value.trim();
+
+            if (!title || !content) return;
+
+            const notes = getNotes();
+            const newNote = {
+                id: Date.now(),
+                title,
+                category,
+                date,
+                content
+            };
+
+            notes.unshift(newNote);
+            saveNotes(notes);
+            renderNotes();
+
+            document.getElementById('note-title').value = '';
+            document.getElementById('note-content').value = '';
+            showToast('🌸 Đã thêm ghi chú mới thành công!');
+        }
+
+        function deleteNote(id) {
+            const notes = getNotes().filter(n => n.id !== id);
+            saveNotes(notes);
+            renderNotes();
+            showToast('Đã xóa ghi chú khỏi danh sách.');
+        }
+
+        function resetSampleNotes() {
+            saveNotes(defaultSampleNotes);
+            document.getElementById('note-search').value = '';
+            renderNotes();
+            showToast('🌸 Đã khôi phục 10 ghi chú mẫu chuẩn Assignment!');
+        }
+
+        function analyzeNotesWithAI() {
+            const notes = getNotes();
+            const uniqueDays = new Set(notes.map(n => n.date)).size;
+            const box = document.getElementById('ai-summary-box');
+            
+            const passCount = notes.length >= 10;
+            const passDays = uniqueDays >= 5;
+
+            box.innerHTML = `
+                <div class="font-bold mb-1">📊 Báo cáo đánh giá tự động (Y5 & Y6):</div>
+                <ul class="space-y-1">
+                    <li>• Tổng số ghi chú hiện có: <strong>${notes.length}/10</strong> ${passCount ? '✅ (Đạt chuẩn)' : '⚠️ (Cần bổ sung thêm)'}</li>
+                    <li>• Số ngày áp dụng thực tế: <strong>${uniqueDays}/5 ngày</strong> ${passDays ? '✅ (Đạt chuẩn)' : '⚠️ (Cần ghi chú thêm các ngày khác)'}</li>
+                    <li>• Nhận xét AI: Hồ sơ ghi chú của <strong>Nguyễn Văn Thành Ngọc</strong> bao phủ tốt kiến thức từ nền tảng phần cứng, mạng đến AI & đạo đức số.</li>
+                </ul>
+            `;
+            box.classList.remove('hidden');
+            showToast('✨ AI đã hoàn tất phân tích tiến độ ghi chú!');
+        }
+
+        function escapeHTML(str) {
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
+        // ==========================================
+        // 4. THÔNG BÁO TOAST & MENU MOBILE
+        // ==========================================
+        function showToast(message) {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = 'px-4 py-3 rounded-2xl bg-slate-800/95 text-white text-xs sm:text-sm font-medium shadow-xl border border-sakura-400/40 flex items-center gap-2 transition-all duration-300';
+            toast.textContent = message;
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateY(10px)';
+                setTimeout(() => toast.remove(), 300);
+            }, 2800);
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // ==========================================
+        // 5. HIỆU ỨNG HOA ANH ĐÀO RƠI (SAKURA CANVAS)
+        // ==========================================
+        const canvas = document.getElementById('sakura-canvas');
+        const ctx = canvas.getContext('2d');
+        let petals = [];
+        let sakuraActive = true;
+        let animationFrameId;
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        class SakuraPetal {
+            constructor() {
+                this.reset(true);
+            }
+
+            reset(initial = false) {
+                this.x = Math.random() * canvas.width;
+                this.y = initial ? Math.random() * canvas.height : -20;
+                this.size = 7 + Math.random() * 9;
+                this.speedY = 0.8 + Math.random() * 1.4;
+                this.speedX = -0.6 + Math.random() * 1.2;
+                this.angle = Math.random() * Math.PI * 2;
+                this.spin = (Math.random() - 0.5) * 0.03;
+                this.flip = Math.random() * Math.PI;
+                this.flipSpeed = 0.02 + Math.random() * 0.02;
+                const colors = ['#ffb7c5', '#ffcdd9', '#ff9eb5', '#ffe4ea', '#f8a5b8'];
+                this.color = colors[Math.floor(Math.random() * colors.length)];
+            }
+
+            update() {
+                this.y += this.speedY;
+                this.x += this.speedX + Math.sin(this.angle) * 0.5;
+                this.angle += this.spin;
+                this.flip += this.flipSpeed;
+
+                if (this.y > canvas.height + 20 || this.x < -30 || this.x > canvas.width + 30) {
+                    this.reset(false);
+                }
+            }
+
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.angle);
+                ctx.scale(1, Math.abs(Math.cos(this.flip)) * 0.7 + 0.3);
+
+                // Vẽ cánh hoa anh đào mềm mại có khía nhẹ ở đầu cánh
+                ctx.beginPath();
+                ctx.moveTo(0, 0);
+                ctx.bezierCurveTo(-this.size * 0.6, -this.size * 0.5, -this.size * 0.5, -this.size * 1.3, 0, -this.size * 1.1);
+                ctx.bezierCurveTo(this.size * 0.5, -this.size * 1.3, this.size * 0.6, -this.size * 0.5, 0, 0);
+                ctx.fillStyle = this.color;
+                ctx.globalAlpha = 0.82;
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        function initSakura() {
+            resizeCanvas();
+            const count = window.innerWidth < 640 ? 28 : 52;
+            petals = Array.from({ length: count }, () => new SakuraPetal());
+        }
+
+        function animateSakura() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            if (sakuraActive) {
+                petals.forEach(p => {
+                    p.update();
+                    p.draw();
+                });
+            }
+            animationFrameId = requestAnimationFrame(animateSakura);
+        }
+
+        function toggleSakura() {
+            sakuraActive = !sakuraActive;
+            const statusText = document.getElementById('sakura-status-text');
+            const statusIcon = document.getElementById('sakura-status-icon');
+            if (sakuraActive) {
+                statusText.textContent = 'Hoa rơi: Bật';
+                statusIcon.textContent = '🌸';
+                showToast('🌸 Đã bật hiệu ứng hoa anh đào rơi');
+            } else {
+                statusText.textContent = 'Hoa rơi: Tắt';
+                statusIcon.textContent = '🍃';
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                showToast('🍃 Đã tạm tắt hiệu ứng hoa rơi');
+            }
+        }
+
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+        });
+
+        // Khởi chạy toàn bộ ứng dụng khi trang tải xong
+        window.onload = function() {
+            // Đặt ngày mặc định hôm nay cho form ghi chú
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('note-date').value = today;
+
+            renderLabs('all');
+            renderNotes();
+            initSakura();
+            animateSakura();
+        };
+    </script>
+</body>
+</html>
